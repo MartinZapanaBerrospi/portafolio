@@ -572,9 +572,6 @@ img {
   filter: grayscale(0%) contrast(1.1);
 }
 
-.image-decoration {
-  display: none;
-}
 
 .about-text p {
   color: var(--text-secondary);
