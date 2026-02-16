@@ -289,8 +289,8 @@ function initStatCounters() {
         });
     }, { threshold: 0.5 });
 
-    const heroStats = document.querySelector('.hero-stats');
-    if (heroStats) observer.observe(heroStats);
+    const homeStats = document.querySelector('.home-stats');
+    if (homeStats) observer.observe(homeStats);
 }
 
 function animateCounter(element, target) {

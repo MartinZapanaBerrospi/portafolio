@@ -126,7 +126,7 @@
     }
 }
 
-/* Gradient shift for hero name */
+/* Gradient shift for home name */
 @keyframes gradientShift {
     0% {
         background-position: 0% 50%;
@@ -192,8 +192,8 @@
     animation: float 3s ease-in-out infinite;
 }
 
-/* Hero name gradient animation */
-.hero-name {
+/* home name gradient animation */
+.home-name {
     background-size: 200% 200%;
     animation: gradientShift 6s ease infinite;
 }

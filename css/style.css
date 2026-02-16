@@ -24,7 +24,7 @@
     var(--accent-cyan),
     var(--accent-violet)
   );
-  --gradient-hero: linear-gradient(
+  --gradient-home: linear-gradient(
     135deg,
     #00d4ff 0%,
     #8b5cf6 50%,
@@ -349,8 +349,8 @@ img {
   justify-content: center;
 }
 
-/* ---------- Hero Section ---------- */
-.hero-section {
+/* ---------- home Section ---------- */
+.home-section {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -362,11 +362,11 @@ img {
   position: relative;
 }
 
-.hero-content {
+.home-content {
   max-width: 800px;
 }
 
-.hero-greeting {
+.home-greeting {
   font-family: var(--font-mono);
   font-size: var(--text-lg);
   color: var(--accent-cyan);
@@ -374,11 +374,11 @@ img {
   font-weight: 500;
 }
 
-.hero-name {
+.home-name {
   font-size: var(--text-4xl);
   font-weight: 800;
   letter-spacing: -0.03em;
-  background: var(--gradient-hero);
+  background: var(--gradient-home);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -386,7 +386,7 @@ img {
   line-height: 1.1;
 }
 
-.hero-title-wrapper {
+.home-title-wrapper {
   font-family: var(--font-mono);
   font-size: var(--text-xl);
   color: var(--text-secondary);
@@ -398,7 +398,7 @@ img {
   min-height: 40px;
 }
 
-.hero-title-prefix {
+.home-title-prefix {
   color: var(--accent-cyan);
   font-weight: 700;
 }
@@ -412,7 +412,7 @@ img {
   font-weight: 300;
 }
 
-.hero-description {
+.home-description {
   font-size: var(--text-lg);
   color: var(--text-secondary);
   max-width: 600px;
@@ -420,7 +420,7 @@ img {
   line-height: 1.8;
 }
 
-.hero-cta {
+.home-cta {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -429,7 +429,7 @@ img {
   flex-wrap: wrap;
 }
 
-.hero-stats {
+.home-stats {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1111,7 +1111,7 @@ img {
     font-size: var(--text-base);
   }
 
-  .hero-stats {
+  .home-stats {
     gap: var(--space-xl);
   }
 
@@ -1147,7 +1147,7 @@ img {
 }
 
 @media (max-width: 480px) {
-  .hero-cta {
+  .home-cta {
     flex-direction: column;
     width: 100%;
   }
@@ -1157,7 +1157,7 @@ img {
     justify-content: center;
   }
 
-  .hero-stats {
+  .home-stats {
     flex-direction: column;
     gap: var(--space-lg);
   }
