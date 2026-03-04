@@ -36,9 +36,9 @@
     // Fallback projects (shown if API fails)
     const FALLBACK_PROJECTS = [
         {
-            name: 'portfolio',
+            name: 'portafolio',
             description: 'Mi portafolio profesional — sitio web personal con diseño moderno y dark theme.',
-            html_url: `https://github.com/${GITHUB_USERNAME}`,
+            html_url: `https://github.com/${GITHUB_USERNAME}/portafolio`,
             language: 'HTML',
             stargazers_count: 0,
             fork: false
@@ -131,8 +131,10 @@
     }
 
     function getProjectLiveUrl(repo) {
-        // If the repo has a homepage set, use that
-        if (repo.homepage) return repo.homepage;
+        // If the repo has a homepage set, and it's not pointing back to the GitHub repo by mistake
+        if (repo.homepage && !repo.homepage.includes('github.com/' + GITHUB_USERNAME)) {
+            return repo.homepage;
+        }
         // Otherwise, build the GitHub Pages URL
         return `https://${GITHUB_USERNAME}.github.io/${repo.name}/`;
     }
