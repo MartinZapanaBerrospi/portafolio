@@ -4,150 +4,177 @@
    ============================================= */
 
 (function () {
-    const GITHUB_USERNAME = 'martinzapanaberrospi';
-    const REPOS_PER_PAGE = 6;
-    const API_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=${REPOS_PER_PAGE}&type=owner`;
+  const GITHUB_USERNAME = "martinzapanaberrospi";
+  const REPOS_PER_PAGE = 6;
+  const API_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=${REPOS_PER_PAGE}&type=owner`;
 
-    // Language colors (matching GitHub's language colors)
-    const LANG_COLORS = {
-        JavaScript: '#f1e05a',
-        TypeScript: '#3178c6',
-        Python: '#3572A5',
-        Java: '#b07219',
-        'C++': '#f34b7d',
-        C: '#555555',
-        'C#': '#239120',
-        Go: '#00ADD8',
-        Rust: '#dea584',
-        Ruby: '#701516',
-        PHP: '#4F5D95',
-        HTML: '#e34c26',
-        CSS: '#563d7c',
-        Shell: '#89e051',
-        Dart: '#00B4AB',
-        Kotlin: '#A97BFF',
-        Swift: '#F05138',
-        Vue: '#41b883',
-        Svelte: '#ff3e00',
-        Jupyter: '#DA5B0B',
-        default: '#8b8b8b'
-    };
+  // Overrides for projects that don't have description or need a custom URL
+  const PROJECT_OVERRIDES = {
+    "RiskPredictor-RPA": {
+      description:
+        "Bot RPA (Robotic Process Automation) interactivo para la predicción y análisis de riesgos.",
+      liveUrl: "https://risk-predictor-rpa.vercel.app/",
+    },
+    SafePayBlockchain: {
+      description:
+        "Sistema descentralizado de pagos seguros implementado con tecnología Blockchain y Smart Contracts.",
+    },
+  };
 
-    // Fallback projects (shown if API fails)
-    const FALLBACK_PROJECTS = [
-        {
-            name: 'portafolio',
-            description: 'Mi portafolio profesional — sitio web personal con diseño moderno y dark theme.',
-            html_url: `https://github.com/${GITHUB_USERNAME}/portafolio`,
-            language: 'HTML',
-            stargazers_count: 0,
-            fork: false
-        },
-        {
-            name: 'proyecto-web',
-            description: 'Aplicación web full stack construida con tecnologías modernas.',
-            html_url: `https://github.com/${GITHUB_USERNAME}`,
-            language: 'JavaScript',
-            stargazers_count: 0,
-            fork: false
-        },
-        {
-            name: 'api-rest',
-            description: 'API RESTful con autenticación, CRUD y documentación Swagger.',
-            html_url: `https://github.com/${GITHUB_USERNAME}`,
-            language: 'Python',
-            stargazers_count: 0,
-            fork: false
-        },
-        {
-            name: 'data-analysis',
-            description: 'Análisis de datos y visualización con Python, Pandas y Matplotlib.',
-            html_url: `https://github.com/${GITHUB_USERNAME}`,
-            language: 'Python',
-            stargazers_count: 0,
-            fork: false
-        },
-        {
-            name: 'cli-tool',
-            description: 'Herramienta de línea de comandos para automatización de tareas.',
-            html_url: `https://github.com/${GITHUB_USERNAME}`,
-            language: 'JavaScript',
-            stargazers_count: 0,
-            fork: false
-        },
-        {
-            name: 'algorithms',
-            description: 'Implementación de algoritmos y estructuras de datos en múltiples lenguajes.',
-            html_url: `https://github.com/${GITHUB_USERNAME}`,
-            language: 'Java',
-            stargazers_count: 0,
-            fork: false
-        }
-    ];
+  // Language colors (matching GitHub's language colors)
+  const LANG_COLORS = {
+    JavaScript: "#f1e05a",
+    TypeScript: "#3178c6",
+    Python: "#3572A5",
+    Java: "#b07219",
+    "C++": "#f34b7d",
+    C: "#555555",
+    "C#": "#239120",
+    Go: "#00ADD8",
+    Rust: "#dea584",
+    Ruby: "#701516",
+    PHP: "#4F5D95",
+    HTML: "#e34c26",
+    CSS: "#563d7c",
+    Shell: "#89e051",
+    Dart: "#00B4AB",
+    Kotlin: "#A97BFF",
+    Swift: "#F05138",
+    Vue: "#41b883",
+    Svelte: "#ff3e00",
+    Jupyter: "#DA5B0B",
+    default: "#8b8b8b",
+  };
 
-    document.addEventListener('DOMContentLoaded', () => {
-        fetchGitHubRepos();
+  // Fallback projects (shown if API fails)
+  const FALLBACK_PROJECTS = [
+    {
+      name: "portafolio",
+      description:
+        "Mi portafolio profesional — sitio web personal con diseño moderno y dark theme.",
+      html_url: `https://github.com/${GITHUB_USERNAME}/portafolio`,
+      language: "HTML",
+      stargazers_count: 0,
+      fork: false,
+    },
+    {
+      name: "proyecto-web",
+      description:
+        "Aplicación web full stack construida con tecnologías modernas.",
+      html_url: `https://github.com/${GITHUB_USERNAME}`,
+      language: "JavaScript",
+      stargazers_count: 0,
+      fork: false,
+    },
+    {
+      name: "api-rest",
+      description:
+        "API RESTful con autenticación, CRUD y documentación Swagger.",
+      html_url: `https://github.com/${GITHUB_USERNAME}`,
+      language: "Python",
+      stargazers_count: 0,
+      fork: false,
+    },
+    {
+      name: "data-analysis",
+      description:
+        "Análisis de datos y visualización con Python, Pandas y Matplotlib.",
+      html_url: `https://github.com/${GITHUB_USERNAME}`,
+      language: "Python",
+      stargazers_count: 0,
+      fork: false,
+    },
+    {
+      name: "cli-tool",
+      description:
+        "Herramienta de línea de comandos para automatización de tareas.",
+      html_url: `https://github.com/${GITHUB_USERNAME}`,
+      language: "JavaScript",
+      stargazers_count: 0,
+      fork: false,
+    },
+    {
+      name: "algorithms",
+      description:
+        "Implementación de algoritmos y estructuras de datos en múltiples lenguajes.",
+      html_url: `https://github.com/${GITHUB_USERNAME}`,
+      language: "Java",
+      stargazers_count: 0,
+      fork: false,
+    },
+  ];
+
+  document.addEventListener("DOMContentLoaded", () => {
+    fetchGitHubRepos();
+  });
+
+  async function fetchGitHubRepos() {
+    const grid = document.getElementById("projects-grid");
+    const loader = document.getElementById("projects-loader");
+    if (!grid) return;
+
+    try {
+      const response = await fetch(API_URL);
+
+      if (!response.ok) {
+        throw new Error(`GitHub API returned ${response.status}`);
+      }
+
+      const repos = await response.json();
+
+      // Filter out forks and sort by stars
+      const ownRepos = repos
+        .filter((repo) => !repo.fork)
+        .sort((a, b) => b.stargazers_count - a.stargazers_count);
+
+      if (ownRepos.length === 0) {
+        throw new Error("No repositories found");
+      }
+
+      renderProjects(ownRepos, grid, loader);
+    } catch (error) {
+      console.warn(
+        "GitHub API unavailable, using fallback projects:",
+        error.message,
+      );
+      renderProjects(FALLBACK_PROJECTS, grid, loader);
+    }
+  }
+
+  function renderProjects(projects, grid, loader) {
+    // Remove loader
+    if (loader) loader.remove();
+
+    projects.forEach((repo, index) => {
+      const card = createProjectCard(repo, index);
+      grid.appendChild(card);
     });
+  }
 
-    async function fetchGitHubRepos() {
-        const grid = document.getElementById('projects-grid');
-        const loader = document.getElementById('projects-loader');
-        if (!grid) return;
-
-        try {
-            const response = await fetch(API_URL);
-
-            if (!response.ok) {
-                throw new Error(`GitHub API returned ${response.status}`);
-            }
-
-            const repos = await response.json();
-
-            // Filter out forks and sort by stars
-            const ownRepos = repos
-                .filter(repo => !repo.fork)
-                .sort((a, b) => b.stargazers_count - a.stargazers_count);
-
-            if (ownRepos.length === 0) {
-                throw new Error('No repositories found');
-            }
-
-            renderProjects(ownRepos, grid, loader);
-
-        } catch (error) {
-            console.warn('GitHub API unavailable, using fallback projects:', error.message);
-            renderProjects(FALLBACK_PROJECTS, grid, loader);
-        }
+  function getProjectLiveUrl(repo) {
+    if (PROJECT_OVERRIDES[repo.name] && PROJECT_OVERRIDES[repo.name].liveUrl) {
+      return PROJECT_OVERRIDES[repo.name].liveUrl;
     }
-
-    function renderProjects(projects, grid, loader) {
-        // Remove loader
-        if (loader) loader.remove();
-
-        projects.forEach((repo, index) => {
-            const card = createProjectCard(repo, index);
-            grid.appendChild(card);
-        });
+    // If the repo has a homepage set, and it's not pointing back to the GitHub repo by mistake
+    if (
+      repo.homepage &&
+      !repo.homepage.includes("github.com/" + GITHUB_USERNAME)
+    ) {
+      return repo.homepage;
     }
+    // Otherwise, build the GitHub Pages URL
+    return `https://${GITHUB_USERNAME}.github.io/${repo.name}/`;
+  }
 
-    function getProjectLiveUrl(repo) {
-        // If the repo has a homepage set, and it's not pointing back to the GitHub repo by mistake
-        if (repo.homepage && !repo.homepage.includes('github.com/' + GITHUB_USERNAME)) {
-            return repo.homepage;
-        }
-        // Otherwise, build the GitHub Pages URL
-        return `https://${GITHUB_USERNAME}.github.io/${repo.name}/`;
-    }
+  function createProjectCard(repo, index) {
+    const card = document.createElement("div");
+    card.className = "project-card reveal";
+    card.style.transitionDelay = `${index * 0.1}s`;
 
-    function createProjectCard(repo, index) {
-        const card = document.createElement('div');
-        card.className = 'project-card reveal';
-        card.style.transitionDelay = `${index * 0.1}s`;
+    const langColor = LANG_COLORS[repo.language] || LANG_COLORS.default;
+    const liveUrl = getProjectLiveUrl(repo);
 
-        const langColor = LANG_COLORS[repo.language] || LANG_COLORS.default;
-        const liveUrl = getProjectLiveUrl(repo);
-
-        card.innerHTML = `
+    card.innerHTML = `
             <div class="project-header">
                 <div class="project-folder">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -170,43 +197,49 @@
                 </div>
             </div>
             <h3>${formatRepoName(repo.name)}</h3>
-            <p>${repo.description || 'Sin descripción disponible.'}</p>
+            <p>${(PROJECT_OVERRIDES[repo.name] && PROJECT_OVERRIDES[repo.name].description) || repo.description || "Sin descripción disponible."}</p>
             <div class="project-meta">
-                ${repo.language ? `
+                ${
+                  repo.language
+                    ? `
                     <span class="project-lang">
                         <span class="lang-dot" style="background-color: ${langColor}"></span>
                         ${repo.language}
                     </span>
-                ` : ''}
-                ${repo.stargazers_count > 0 ? `
+                `
+                    : ""
+                }
+                ${
+                  repo.stargazers_count > 0
+                    ? `
                     <span class="project-stars">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                         ${repo.stargazers_count}
                     </span>
-                ` : ''}
+                `
+                    : ""
+                }
             </div>
         `;
 
-        // Click card to open the live page
-        card.addEventListener('click', (e) => {
-            if (!e.target.closest('a')) {
-                window.open(liveUrl, '_blank', 'noopener,noreferrer');
-            }
-        });
+    // Click card to open the live page
+    card.addEventListener("click", (e) => {
+      if (!e.target.closest("a")) {
+        window.open(liveUrl, "_blank", "noopener,noreferrer");
+      }
+    });
 
-        // Trigger reveal after append
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                card.classList.add('revealed');
-            });
-        });
+    // Trigger reveal after append
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        card.classList.add("revealed");
+      });
+    });
 
-        return card;
-    }
+    return card;
+  }
 
-    function formatRepoName(name) {
-        return name
-            .replace(/[-_]/g, ' ')
-            .replace(/\b\w/g, c => c.toUpperCase());
-    }
+  function formatRepoName(name) {
+    return name.replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  }
 })();
