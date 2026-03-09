@@ -8,17 +8,11 @@
   const REPOS_PER_PAGE = 6;
   const API_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=${REPOS_PER_PAGE}&type=owner`;
 
-  // Overrides for projects that don't have description or need a custom URL
+  // Configuración de URLs en vivo cuando sean distintas a las provistas por GitHub
   const PROJECT_OVERRIDES = {
     "RiskPredictor-RPA": {
-      description:
-        "Bot RPA (Robotic Process Automation) interactivo para la predicción y análisis de riesgos.",
       liveUrl: "https://risk-predictor-rpa.vercel.app/",
-    },
-    SafePayBlockchain: {
-      description:
-        "Sistema descentralizado de pagos seguros implementado con tecnología Blockchain y Smart Contracts.",
-    },
+    }
   };
 
   // Language colors (matching GitHub's language colors)
