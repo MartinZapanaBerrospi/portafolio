@@ -203,7 +203,7 @@ graph LR
 | :--: | :-------------- | :------------------------------------------------------------------------------ |
 | `01` | **Sobre Mí**    | Presentación personal con foto, badges de soft skills y descripción profesional |
 | `02` | **Experiencia** | Timeline interactivo con historial laboral y de programación competitiva        |
-| `03` | **Habilidades** | Grid de 19 tecnologías con íconos oficiales de Devicon                          |
+| `03` | **Habilidades** | Grid de 22 tecnologías con íconos oficiales de Devicon                          |
 | `04` | **Proyectos**   | Tarjetas cargadas dinámicamente desde la API de GitHub                          |
 | `05` | **Educación**   | Timeline con formación académica y certificaciones                              |
 | `06` | **Contacto**    | Formulario de contacto + enlaces a redes sociales                               |
@@ -243,7 +243,6 @@ graph LR
 
 ![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)
-![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white)
 
 ### Inteligencia Artificial
 
