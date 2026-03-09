@@ -640,7 +640,34 @@ img {
   }
 }
 
-/* ---------- Skills Section (Icon Grid) ---------- */
+/* ---------- Skills Section ---------- */
+.skills-category {
+  margin-bottom: var(--space-3xl);
+}
+
+.skills-category:last-child {
+  margin-bottom: 0;
+}
+
+.skills-category-title {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xl);
+  text-align: center;
+  position: relative;
+}
+
+.skills-category-title::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: var(--gradient-primary);
+  margin: var(--space-sm) auto 0;
+  border-radius: 2px;
+}
+
 .skills-icon-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
