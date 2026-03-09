@@ -19,17 +19,24 @@ function initNavbar() {
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    // Scroll effect
+    // Scroll effect for navbar (optimizado con requestAnimationFrame)
+    let isScrolling = false;
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+                isScrolling = false;
+            });
+            isScrolling = true;
         }
+    }, { passive: true });
 
-        // Update active nav link
-        updateActiveLink();
-    });
+    // Iniciar ScrollSpy usando IntersectionObserver
+    initScrollSpy(navLinks);
 
     // Mobile menu toggle
     navToggle.addEventListener('click', () => {
@@ -58,24 +65,32 @@ function initNavbar() {
     });
 }
 
-function updateActiveLink() {
+function initScrollSpy(navLinks) {
     const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    let currentSection = '';
+    
+    // IntersectionObserver options map active section around the top/middle of screen
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -70% 0px',
+        threshold: 0
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Removes active class from all links
+                navLinks.forEach(link => link.classList.remove('active'));
+                
+                // Add active class to corresponding nav link
+                const activeLink = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        });
+    }, observerOptions);
 
-    sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 150 && rect.bottom > 150) {
-            currentSection = section.id;
-        }
-    });
-
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${currentSection}`) {
-            link.classList.add('active');
-        }
-    });
+    sections.forEach(section => observer.observe(section));
 }
 
 /* ---------- Typing Animation ---------- */
