@@ -8,12 +8,7 @@
   const REPOS_PER_PAGE = 6;
   const API_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=${REPOS_PER_PAGE}&type=owner`;
 
-  // Configuración de URLs en vivo cuando sean distintas a las provistas por GitHub
-  const PROJECT_OVERRIDES = {
-    "RiskPredictor-RPA": {
-      liveUrl: "https://risk-predictor-rpa.vercel.app/",
-    }
-  };
+
 
   // Language colors (matching GitHub's language colors)
   const LANG_COLORS = {
@@ -146,9 +141,6 @@
   }
 
   function getProjectLiveUrl(repo) {
-    if (PROJECT_OVERRIDES[repo.name] && PROJECT_OVERRIDES[repo.name].liveUrl) {
-      return PROJECT_OVERRIDES[repo.name].liveUrl;
-    }
     // If the repo has a homepage set, and it's not pointing back to the GitHub repo by mistake
     if (
       repo.homepage &&
@@ -191,7 +183,7 @@
                 </div>
             </div>
             <h3>${formatRepoName(repo.name)}</h3>
-            <p>${(PROJECT_OVERRIDES[repo.name] && PROJECT_OVERRIDES[repo.name].description) || repo.description || "Sin descripción disponible."}</p>
+            <p>${repo.description || "Sin descripción disponible."}</p>
             <div class="project-meta">
                 ${
                   repo.language
